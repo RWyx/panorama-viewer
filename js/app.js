@@ -3,7 +3,7 @@ const floors = [
     title: "一楼",
     path: "./assets/rooms/floor1",
     scenes: [
-      { dir: "01-南房", faces: ["l", "r", "f", "b", "u", "d"] },
+      { dir: "01-南房", faces: ["l", "f", "r", "b", "u", "d"] },
       "02-南房",
       "03-南房",
       "04-主卧",
