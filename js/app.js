@@ -57,7 +57,7 @@ const roomYawOffset = {
   "assets/rooms/floor1/01-南房": 90,
 };
 const roomFaceRotation = {
-  "assets/rooms/floor1/01-南房": { u: 90, d: 90 },
+  "assets/rooms/floor1/01-南房": { u: 270, d: 90 },
 };
 const activeObjectUrls = new Set();
 
