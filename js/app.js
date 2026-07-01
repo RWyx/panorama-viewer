@@ -56,6 +56,10 @@ let activeSceneIndex = 0;
 const roomYawOffset = {
   "assets/rooms/floor1/01-南房": 90,
 };
+const roomFaceRotation = {
+  "assets/rooms/floor1/01-南房": { u: 90, d: 90 },
+};
+const activeObjectUrls = new Set();
 
 function normalizeAngle(angle) {
   return ((angle % 360) + 360) % 360;
@@ -69,12 +73,54 @@ function currentRoomKey(room) {
   return getRoomPathKey(room.path);
 }
 
-function cubeMapFor(room) {
-  return (room.faces || faces).map((face) => `${room.path}/pano_${face}.jpg`);
+async function rotateImage90ToUrl(src, angle) {
+  const normalized = normalizeAngle(angle);
+  if (normalized === 0) return src;
+
+  const response = await fetch(src);
+  const blob = await response.blob();
+  const source = await createImageBitmap(blob);
+  const needsSwap = normalized === 90 || normalized === 270;
+  const canvas = document.createElement("canvas");
+  canvas.width = needsSwap ? source.height : source.width;
+  canvas.height = needsSwap ? source.width : source.height;
+
+  const ctx = canvas.getContext("2d");
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate((Math.PI / 180) * normalized);
+  ctx.drawImage(source, -source.width / 2, -source.height / 2);
+
+  const url = await new Promise((resolve) => {
+    canvas.toBlob((blobOut) => {
+      const objectUrl = URL.createObjectURL(blobOut);
+      activeObjectUrls.add(objectUrl);
+      resolve(objectUrl);
+    }, "image/jpeg", 0.95);
+  });
+  return url;
 }
 
-function loadRoom(room) {
+function clearObjectUrls() {
+  activeObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  activeObjectUrls.clear();
+}
+
+async function cubeMapFor(room) {
+  const roomKey = currentRoomKey(room);
+  const rotation = roomFaceRotation[roomKey] || {};
+  const faceList = room.faces || faces;
+  const maps = await Promise.all(
+    faceList.map(async (face) => {
+      const path = `${room.path}/pano_${face}.jpg`;
+      return rotateImage90ToUrl(path, rotation[face] || 0);
+    })
+  );
+  return maps;
+}
+
+async function loadRoom(room) {
   if (viewer) viewer.destroy();
+  clearObjectUrls();
   viewerElement.replaceChildren();
   const roomKey = currentRoomKey(room);
   const roomYaw = roomYawOffset[roomKey] || 0;
@@ -88,9 +134,10 @@ function loadRoom(room) {
     }
   }
 
+  const cubeMap = await cubeMapFor(room);
   viewer = pannellum.viewer("viewer", {
     type: "cubemap",
-    cubeMap: cubeMapFor(room),
+    cubeMap,
     autoLoad: true,
     showControls: true,
     compass: false,
