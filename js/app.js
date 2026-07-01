@@ -54,7 +54,7 @@ let viewer;
 let activeFloorIndex = 0;
 let activeSceneIndex = 0;
 const roomYawOffset = {
-  "floor1/01-南房": 90,
+  "assets/rooms/floor1/01-南房": 90,
 };
 
 function normalizeAngle(angle) {
