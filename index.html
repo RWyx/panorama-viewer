@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>本地 360 全景浏览器</title>
+    <link rel="icon" href="data:," />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <div id="viewer"></div>
+
+      <div class="visitor-count">访问量: 28</div>
+
+      <section id="yawAdjuster" class="yaw-adjuster" aria-label="当前房间朝向修正" hidden>
+        <button id="yawLeft" type="button" title="向左旋转 90 度">左转 90°</button>
+        <span id="yawValue">南房朝向补偿: 0°</span>
+        <button id="yawRight" type="button" title="向右旋转 90 度">右转 90°</button>
+        <button id="yawReset" type="button" title="重置朝向">重置</button>
+      </section>
+
+      <nav id="floorNav" class="floor-nav" aria-label="楼层"></nav>
+
+      <section class="scene-dock" aria-label="场景">
+        <button id="toggleScenes" class="collapse-button" type="button">
+          收起分组
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <div id="sceneList" class="scene-list"></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

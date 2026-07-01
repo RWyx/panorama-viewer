@@ -1,0 +1,177 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  background: #111;
+  color: #fff;
+  overflow: hidden;
+}
+
+.app {
+  position: relative;
+  height: 100%;
+}
+
+#viewer {
+  height: 100%;
+}
+
+.visitor-count {
+  position: absolute;
+  top: 32px;
+  right: 28px;
+  z-index: 3;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 65%);
+}
+
+.yaw-adjuster {
+  position: absolute;
+  top: 72px;
+  right: 28px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgb(18 18 18 / 78%);
+}
+
+.yaw-adjuster button,
+.yaw-adjuster span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.yaw-adjuster button {
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  background: rgb(255 255 255 / 12%);
+}
+
+.floor-nav {
+  position: absolute;
+  left: 24px;
+  bottom: 226px;
+  z-index: 3;
+  display: grid;
+  gap: 12px;
+}
+
+.floor-button,
+.collapse-button,
+.scene-card {
+  border: 0;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.floor-button {
+  min-width: 76px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgb(18 18 18 / 78%);
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgb(0 0 0 / 24%);
+}
+
+.floor-button.is-active {
+  background: #ef4856;
+}
+
+.scene-dock {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  padding: 16px 24px 28px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%), rgb(0 0 0 / 62%));
+}
+
+.collapse-button {
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  background: rgb(18 18 18 / 68%);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.scene-list {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.scene-card {
+  position: relative;
+  flex: 0 0 130px;
+  height: 72px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  border-radius: 7px;
+  background: #222;
+  box-shadow: 0 5px 18px rgb(0 0 0 / 28%);
+}
+
+.scene-card.is-active {
+  border-color: #fff;
+}
+
+.scene-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene-card span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 18px 6px 7px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%), rgb(0 0 0 / 76%));
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.pnlm-controls-container {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .floor-nav {
+    bottom: 180px;
+  }
+
+  .floor-button {
+    min-width: 62px;
+    font-size: 17px;
+  }
+
+  .scene-card {
+    flex-basis: 104px;
+    height: 60px;
+  }
+
+  .scene-card span {
+    font-size: 15px;
+  }
+}
